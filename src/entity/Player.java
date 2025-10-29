@@ -3,6 +3,7 @@ package entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,9 +24,10 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
+        solidArea = new Rectangle(8, 16, 32, 32);
 
         setDefaultValues();
         getPlayerImage();
@@ -41,22 +43,14 @@ public class Player extends Entity {
     public void getPlayerImage() {
         try {
 
-            up1 =
-            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up1.png"));
-            up2 =
-            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up2.png"));
-            down1 =
-            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down1.png"));
-            down2 =
-            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down2.png"));
-            left1 =
-            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left1.png"));
-            left2 =
-            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left2.png"));
-            right1 =
-            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right1.png"));
-            right2 =
-            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right2.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up1.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up2.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down1.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down2.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left1.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left2.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right1.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right2.png"));
 
             // up1 = ImageIO.read(new File("res/player/Slime_up1.png"));
             // up2 = ImageIO.read(new File("res/player/Slime_up2.png"));
@@ -78,17 +72,40 @@ public class Player extends Entity {
                 || keyH.rightPressed == true) {
             if (keyH.upPressed == true) {
                 direction = "up";
-                worldY -= speed;
+                
 
             } else if (keyH.downPressed == true) {
                 direction = "down";
-                worldY += speed;
+                
             } else if (keyH.leftPressed == true) {
                 direction = "left";
-                worldX -= speed;
+                
             } else if (keyH.rightPressed == true) {
                 direction = "right";
-                worldX += speed;
+                
+            }
+
+            // CHECK TILE COLLISION
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            // IF COLLISION IF FALSE, PLAYER CAN MOVE
+            if (collisionOn == false) {
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+
+                }
             }
 
             spriteCounter++;
