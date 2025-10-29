@@ -34,31 +34,31 @@ public class Player extends Entity {
     public void getPlayerImage() {
         try {
 
-            // up1 =
-            // ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up1.png"));
-            // up2 =
-            // ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up2.png"));
-            // down1 =
-            // ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down1.png"));
-            // down2 =
-            // ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down2.png"));
-            // left1 =
-            // ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left1.png"));
-            // left2 =
-            // ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left2.png"));
-            // right1 =
-            // ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right1.png"));
-            // right2 =
-            // ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right2.png"));
+            up1 =
+            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up1.png"));
+            up2 =
+            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up2.png"));
+            down1 =
+            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down1.png"));
+            down2 =
+            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down2.png"));
+            left1 =
+            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left1.png"));
+            left2 =
+            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left2.png"));
+            right1 =
+            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right1.png"));
+            right2 =
+            ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right2.png"));
 
-            up1 = ImageIO.read(new File("res/player/Slime_up1.png"));
-            up2 = ImageIO.read(new File("res/player/Slime_up2.png"));
-            down1 = ImageIO.read(new File("res/player/Slime_down1.png"));
-            down2 = ImageIO.read(new File("res/player/Slime_down2.png"));
-            left1 = ImageIO.read(new File("res/player/Slime_left1.png"));
-            left2 = ImageIO.read(new File("res/player/Slime_left2.png"));
-            right1 = ImageIO.read(new File("res/player/Slime_right1.png"));
-            right2 = ImageIO.read(new File("res/player/Slime_right2.png"));
+            // up1 = ImageIO.read(new File("res/player/Slime_up1.png"));
+            // up2 = ImageIO.read(new File("res/player/Slime_up2.png"));
+            // down1 = ImageIO.read(new File("res/player/Slime_down1.png"));
+            // down2 = ImageIO.read(new File("res/player/Slime_down2.png"));
+            // left1 = ImageIO.read(new File("res/player/Slime_left1.png"));
+            // left2 = ImageIO.read(new File("res/player/Slime_left2.png"));
+            // right1 = ImageIO.read(new File("res/player/Slime_right1.png"));
+            // right2 = ImageIO.read(new File("res/player/Slime_right2.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
