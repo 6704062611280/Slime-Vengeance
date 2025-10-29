@@ -14,11 +14,13 @@ import main.GamePanel;
 import main.KeyHandler;
 
 public class Player extends Entity {
+
     GamePanel gp;
     KeyHandler keyH;
 
     public final int screenX;
     public final int screenY;
+    
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -107,7 +109,7 @@ public class Player extends Entity {
 
                 }
             }
-
+            
             spriteCounter++;
             if (spriteCounter > 12) {
                 if (spriteNum == 1) {

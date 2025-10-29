@@ -31,14 +31,22 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     int FPS = 60;
 
-
+    // SYSTEM
     TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public UI ui = new UI(this);
+
+
+    // ENTITY AND OBJECT
     public Player player = new Player(this,keyH);
 
-    // set player's defalut positions
+    // GAME STATE
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
+
     
 
     public GamePanel() {
@@ -47,6 +55,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+    }
+
+    public void setupGame(){
+        gameState = playState;
     }
 
     public void startGameThread() {
@@ -77,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
                 Thread.sleep((long) remainingTime);
 
                 nextDrawTime += drawInterval;
-
+                // System.out.println("RUN");
             } catch (Exception e) {
                 // TODO: handle exception
             }
@@ -87,16 +99,28 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
+
+        if(gameState == playState){
+            player.update();
+        }
+        if(gameState == pauseState){
+            //nothing
+        }
+        
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g;
 
+        //TILE
         tileM.draw(g2);
+
+        // PLAYER
         player.draw(g2);
+
+        //UI
+        ui.draw(g2);
 
         g2.dispose();
     }
