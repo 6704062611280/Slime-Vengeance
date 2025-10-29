@@ -12,10 +12,11 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 public class Player extends Entity {
 
-    GamePanel gp;
+    
     KeyHandler keyH;
 
     public final int screenX;
@@ -23,13 +24,21 @@ public class Player extends Entity {
     
 
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+
+        super(gp);
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
-        solidArea = new Rectangle(8, 16, 32, 32);
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 32;
+        solidArea.height = 32;
+        // solidArea = new Rectangle(8, 16, 32, 32);
 
         setDefaultValues();
         getPlayerImage();
@@ -40,32 +49,34 @@ public class Player extends Entity {
         worldY = gp.tileSize * 21;
         speed = 4;
         direction = "down";
+
+        //  PLAYER STATUS
+        maxLife = 6;
+        life = maxLife;
     }
 
     public void getPlayerImage() {
+        
+        up1 = setup("Slime_up1");
+        up2 = setup("Slime_up2");
+        down1 = setup("Slime_down1");
+        down2 = setup("Slime_down2");
+        left1 = setup("Slime_left1");
+        left2 = setup("Slime_left2");
+        right1 = setup("Slime_right1");
+        right2 = setup("Slime_right2");
+    }
+
+    public BufferedImage setup(String imageName){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
         try {
-
-            up1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_up2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_down2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_left2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Slime_right2.png"));
-
-            // up1 = ImageIO.read(new File("res/player/Slime_up1.png"));
-            // up2 = ImageIO.read(new File("res/player/Slime_up2.png"));
-            // down1 = ImageIO.read(new File("res/player/Slime_down1.png"));
-            // down2 = ImageIO.read(new File("res/player/Slime_down2.png"));
-            // left1 = ImageIO.read(new File("res/player/Slime_left1.png"));
-            // left2 = ImageIO.read(new File("res/player/Slime_left2.png"));
-            // right1 = ImageIO.read(new File("res/player/Slime_right1.png"));
-            // right2 = ImageIO.read(new File("res/player/Slime_right2.png"));
-
+            image = ImageIO.read(getClass().getResourceAsStream("/res/player/"+imageName+".png"));
+            image = uTool.scaledImage(image, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return image;
     }
 
     public void update() {
@@ -90,6 +101,10 @@ public class Player extends Entity {
             // CHECK TILE COLLISION
             collisionOn = false;
             gp.cChecker.checkTile(this);
+
+            // CHECK OBJECT COLLISION
+            int objIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
 
             // IF COLLISION IF FALSE, PLAYER CAN MOVE
             if (collisionOn == false) {
@@ -121,6 +136,22 @@ public class Player extends Entity {
             }
         }
 
+    }
+
+
+    public void pickUpObject(int i){
+        
+        if(i != 999){
+            String objectName = gp.obj[i].name;
+            gp.obj[i] = null;
+            switch (objectName) {
+                case "Soul":
+                    gp.obj[i] = null;
+                    
+                    break;
+            
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {

@@ -11,6 +11,7 @@ public class KeyHandler implements KeyListener {
     public boolean downPressed = false;
     public boolean leftPressed = false;
     public boolean rightPressed = false;
+    public boolean pausePressed = false;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -25,7 +26,17 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_W){
+        //TITLE STATE
+        if(gp.gameState == gp.titleState){
+
+        }
+
+
+
+
+        //PLAY STATE
+        if(gp.gameState == gp.playState){
+            if(code == KeyEvent.VK_W){
             upPressed = true;
         }
         if(code == KeyEvent.VK_S){
@@ -37,14 +48,21 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_D){
             rightPressed = true;
         }
+        
+        }
+
+        // PAUSE STATE
         if(code == KeyEvent.VK_P){
             if(gp.gameState == gp.playState){
                 gp.gameState = gp.pauseState;
+                
+                
             }
             else if(gp.gameState == gp.pauseState){
                 gp.gameState = gp.playState;
             }
         }
+        
     }
 
     @Override
