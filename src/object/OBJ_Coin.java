@@ -17,7 +17,7 @@ public class OBJ_Coin extends Entity{
         super(gp);
         name = "Coin";
         try {
-            java.awt.image.BufferedImage img = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/object/coin.png")), gp.tileSize/2, gp.tileSize/2);
+            java.awt.image.BufferedImage img = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/object/coin.png")), gp.tileSize/2, gp.tileSize/2);
             // set as down1 so Entity.draw will display it
             down1 = img;
             down2 = img;

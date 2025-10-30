@@ -31,14 +31,14 @@ public class OBJ_Fireball extends Projectile {
 
     public void getImage() {
         try {
-            up1 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/projectile/fireball_up1.png")), gp.tileSize/2, gp.tileSize/2);
-            up2 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/projectile/fireball_up2.png")), gp.tileSize/2, gp.tileSize/2);
-            down1 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/projectile/fireball_down1.png")), gp.tileSize/2, gp.tileSize/2);
-            down2 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/projectile/fireball_down2.png")), gp.tileSize/2, gp.tileSize/2);
-            left1 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/projectile/fireball_left1.png")), gp.tileSize/2, gp.tileSize/2);
-            left2 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/projectile/fireball_left2.png")), gp.tileSize/2, gp.tileSize/2);
-            right1 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/projectile/fireball_right1.png")), gp.tileSize/2, gp.tileSize/2);
-            right2 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/res/projectile/fireball_right2.png")), gp.tileSize/2, gp.tileSize/2);
+            up1 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/projectile/fireball_up1.png")), gp.tileSize/2, gp.tileSize/2);
+            up2 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/projectile/fireball_up2.png")), gp.tileSize/2, gp.tileSize/2);
+            down1 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/projectile/fireball_down1.png")), gp.tileSize/2, gp.tileSize/2);
+            down2 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/projectile/fireball_down2.png")), gp.tileSize/2, gp.tileSize/2);
+            left1 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/projectile/fireball_left1.png")), gp.tileSize/2, gp.tileSize/2);
+            left2 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/projectile/fireball_left2.png")), gp.tileSize/2, gp.tileSize/2);
+            right1 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/projectile/fireball_right1.png")), gp.tileSize/2, gp.tileSize/2);
+            right2 = uTool.scaledImage(ImageIO.read(getClass().getResourceAsStream("/projectile/fireball_right2.png")), gp.tileSize/2, gp.tileSize/2);
         } catch(IOException e) {
             e.printStackTrace();
         }

@@ -111,7 +111,7 @@ public class Player extends Entity {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/player/" + imageName + ".png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
             image = uTool.scaledImage(image, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             e.printStackTrace();

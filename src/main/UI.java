@@ -141,7 +141,7 @@ public class UI {
 
         BufferedImage bg = null;
         try {
-            bg = ImageIO.read(getClass().getResourceAsStream("/res/Title_screen.png"));
+            bg = ImageIO.read(getClass().getResourceAsStream("/Title_screen.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -212,7 +212,7 @@ public class UI {
         // =================================SETTING======================================
         BufferedImage st = null;
         try {
-            st = ImageIO.read(getClass().getResourceAsStream("/res/Setting_icon.png"));
+            st = ImageIO.read(getClass().getResourceAsStream("/Setting_icon.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
