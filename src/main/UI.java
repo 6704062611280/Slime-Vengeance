@@ -10,8 +10,9 @@ import java.text.DecimalFormat;
 
 import javax.imageio.ImageIO;
 
+import entity.Entity;
 import object.OBJ_Heart;
-import object.SuperObject;
+
 
 public class UI {
     GamePanel gp;
@@ -33,7 +34,7 @@ public class UI {
         arial_80B = new Font("Arial", Font.BOLD, 80);
 
         //  CREATE HUD OBJECT
-        SuperObject heart = new OBJ_Heart(gp);
+        Entity heart = new OBJ_Heart(gp);
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;
@@ -68,7 +69,7 @@ public class UI {
 
     public void drawPlayerLife(){
 
-        gp.player.life = 2;
+        
 
         int x = gp.tileSize/2;
         int y = gp.tileSize/2;
