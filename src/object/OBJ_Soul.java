@@ -13,8 +13,9 @@ public class OBJ_Soul extends Entity{
     public OBJ_Soul(GamePanel gp){
         super(gp);
 
-        name = "Soul";
-        down1 = setup("/object/soul");
+    name = "Soul";
+    down1 = setup("/object/soul");
+    down2 = down1;
 
         // ✅ เพิ่มส่วนนี้
         solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize);

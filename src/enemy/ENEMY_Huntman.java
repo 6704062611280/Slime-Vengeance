@@ -18,9 +18,10 @@ public class ENEMY_Huntman extends Entity {
         this.gp = gp;
 
         name = "Huntman";
-        speed = 1;
-        maxLife = 4;
+        speed = 1; // จะถูกปรับตามเวลาที่เหลือใน update()
+        maxLife = 8;
         life = maxLife;
+        attack = 1;   // damage to player on contact
 
         solidArea = new Rectangle();
         solidArea.x = 3;
@@ -40,32 +41,69 @@ public class ENEMY_Huntman extends Entity {
         // แปลง chaseRange เป็นพิกเซล
         chaseRange = chaseRange * gp.tileSize;
 
+    // set shorter death duration for this enemy
+    this.deathDuration = 40;
+
     }
 
     public void update() {
-        setAction(); // อัปเดตทิศทาง
+        // Adjust speed based on remaining time
+        int remainingSeconds = gp.levelDurationSeconds - (int)(gp.elapsedFrames / gp.FPS);
+        double timeRatio = (double)remainingSeconds / gp.levelDurationSeconds;
+        double maxSpeed = gp.player.speed * 0.75; // ไม่เกิน 75% ของความเร็วผู้เล่น
+        double minSpeed = 1.0; // ความเร็วต่ำสุด
+        speed = (int)Math.round(minSpeed + (maxSpeed - minSpeed) * (1.0 - timeRatio));
 
-        // move according to direction
-        switch (direction) {
-            case "up":
-                worldY -= speed;
-                break;
-            case "down":
-                worldY += speed;
-                break;
-            case "left":
-                worldX -= speed;
-                break;
-            case "right":
-                worldX += speed;
-                break;
+        // If dying, only update death animation
+        if (dying) {
+            deathCounter++;
+            // simple flicker effect
+            if (deathCounter % 10 < 5) {
+                spriteNum = 1;
+            } else {
+                spriteNum = 2;
+            }
+            if (deathCounter > deathDuration) {
+                readyToRemove = true;
+            }
+            return; // skip other updates while dying
         }
 
-        // ตรวจสอบ collision กับ tile หรือ player (ถ้ามี)
+        // Normal update loop
+        setAction(); // อัปเดตทิศทาง
+
+        // Check collisions before moving
+        collisionOn = false;
         gp.cChecker.checkTile(this);
+        gp.cChecker.checkEntity(this, gp.enemy);
+        gp.cChecker.checkPlayer(this);
+        
+        // Move if no collision
+        if (!collisionOn) {
+            switch (direction) {
+                case "up": worldY -= speed; break;
+                case "down": worldY += speed; break;
+                case "left": worldX -= speed; break;
+                case "right": worldX += speed; break;
+            }
+        }
 
-        // อัปเดต animation frame ถ้ามี
+        // Sprite animation
+        spriteCounter++;
+        if (spriteCounter > 12) {
+            if (spriteNum == 1) {
+                spriteNum = 2;
+            } else if (spriteNum == 2) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
 
+        // Check if dead
+        if (life <= 0 && !dying) {
+            dying = true;
+            deathCounter = 0;
+        }
     }
 
     public void getImage() {

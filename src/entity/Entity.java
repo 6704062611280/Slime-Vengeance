@@ -23,6 +23,12 @@ public class Entity {
     public int invincibleCounter = 0;
     public int spriteNum = 1;
 
+    // death animation / removal
+    public boolean dying = false;
+    public int deathCounter = 0;
+    public int deathDuration = 60; // frames to wait before removal (1 second at 60 FPS)
+    public boolean readyToRemove = false;
+
     
     public Rectangle solidArea;
     public int solidAreaDefaultX, solidAreaDefaultY;
@@ -36,6 +42,11 @@ public class Entity {
     public int speed;
     public int maxLife;
     public int life;
+    public int attack;
+    public Boolean alive = true;
+
+
+    public GamePanel projectile;
 
     public Entity(GamePanel gp){
         this.gp = gp;
@@ -44,6 +55,21 @@ public class Entity {
     // UPDATE
     public void setAction() {}
     public void update(){
+
+        // If currently in dying state, count down and mark readyToRemove when finished
+        if (dying) {
+            deathCounter++;
+            // simple flicker effect
+            if (deathCounter % 10 < 5) {
+                spriteNum = 1;
+            } else {
+                spriteNum = 2;
+            }
+            if (deathCounter > deathDuration) {
+                readyToRemove = true;
+            }
+            return; // skip other updates while dying
+        }
 
         setAction();
 
@@ -144,6 +170,57 @@ public class Entity {
             }
 
             g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+
+            // Fallback drawing when image is missing for simple items
+            if (image == null && name != null) {
+                // draw simple shapes for common items so drops are visible
+                if (name.equalsIgnoreCase("coin")) {
+                    int size = gp.tileSize/2;
+                    int cx = screenX + gp.tileSize/2 - size/2;
+                    int cy = screenY + gp.tileSize/2 - size/2;
+                    g2.setColor(new java.awt.Color(212,175,55)); // gold
+                    g2.fillOval(cx, cy, size, size);
+                    g2.setColor(java.awt.Color.BLACK);
+                    g2.drawOval(cx, cy, size, size);
+                } else if (name.equalsIgnoreCase("soul")) {
+                    int size = gp.tileSize/2;
+                    int cx = screenX + gp.tileSize/2 - size/2;
+                    int cy = screenY + gp.tileSize/2 - size/2;
+                    g2.setColor(new java.awt.Color(153,50,204)); // purple
+                    g2.fillOval(cx, cy, size, size);
+                    g2.setColor(java.awt.Color.WHITE);
+                    g2.drawOval(cx, cy, size, size);
+                } else {
+                    // generic placeholder for unknowns
+                    int size = gp.tileSize/2;
+                    int cx = screenX + gp.tileSize/2 - size/2;
+                    int cy = screenY + gp.tileSize/2 - size/2;
+                    g2.setColor(java.awt.Color.GRAY);
+                    g2.fillRect(cx, cy, size, size);
+                }
+            }
+
+            // Draw small health bar under non-player entities that have life
+            if (this != gp.player && this.maxLife > 0) {
+                int barWidth = gp.tileSize - 8;
+                int barHeight = 6;
+                int barX = screenX + 4;
+                int barY = screenY + gp.tileSize + 4;
+
+                // background
+                g2.setColor(new java.awt.Color(0,0,0,150));
+                g2.fillRect(barX - 1, barY - 1, barWidth + 2, barHeight + 2);
+
+                // empty
+                g2.setColor(java.awt.Color.RED);
+                g2.fillRect(barX, barY, barWidth, barHeight);
+
+                // current
+                double ratio = (double)this.life / (double)this.maxLife;
+                int currentWidth = (int)(barWidth * Math.max(0, Math.min(1.0, ratio)));
+                g2.setColor(java.awt.Color.GREEN);
+                g2.fillRect(barX, barY, currentWidth, barHeight);
+            }
             
         }
 

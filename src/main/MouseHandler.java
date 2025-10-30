@@ -17,7 +17,7 @@ public class MouseHandler extends MouseAdapter {
         int y = e.getY();
 
         // ถ้าอยู่ในหน้า Title
-        if (gp.gameState == gp.titleState) {
+        if (gp.gameState == gp.titleState || gp.gameState == gp.gameOverState || gp.gameState == gp.upgradeState) {
             gp.ui.checkClick(x, y);
         }
 

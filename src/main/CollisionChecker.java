@@ -115,6 +115,39 @@ public class CollisionChecker {
             }
         }
 
+        // Check dynamic items list as well. If found, return 1000 + index to distinguish.
+        for (int i = 0; i < gp.items.size(); i++) {
+            Entity objItem = gp.items.get(i);
+            if (objItem != null) {
+                entity.solidArea.x = entity.worldX + entity.solidArea.x;
+                entity.solidArea.y = entity.worldY + entity.solidArea.y;
+
+                objItem.solidArea.x = objItem.worldX + objItem.solidArea.x;
+                objItem.solidArea.y = objItem.worldY + objItem.solidArea.y;
+
+                switch (entity.direction) {
+                    case "up": entity.solidArea.y -= entity.speed; break;
+                    case "down": entity.solidArea.y += entity.speed; break;
+                    case "left": entity.solidArea.x -= entity.speed; break;
+                    case "right": entity.solidArea.x += entity.speed; break;
+                }
+
+                if (entity.solidArea.intersects(objItem.solidArea)) {
+                    if (objItem.collision == true) {
+                        entity.collisionOn = true;
+                    }
+                    if (player == true) {
+                        index = 1000 + i;
+                    }
+                }
+
+                entity.solidArea.x = entity.solidAreaDefaultX;
+                entity.solidArea.y = entity.solidAreaDefaultY;
+                objItem.solidArea.x = objItem.solidAreaDefaultX;
+                objItem.solidArea.y = objItem.solidAreaDefaultY;
+            }
+        }
+
         return index;
     }
 
